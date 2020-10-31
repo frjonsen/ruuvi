@@ -55,7 +55,7 @@ fn parse_advertisement_message(msg: &[u8]) -> RuuviDataPoint {
     let humidity = 0.0025f32 * humidity as f32;
 
     let pressure = u16::from_be_bytes(u16_bytes(&msg[7..=8])) as u32;
-    let pressure = pressure - 50_000;
+    let pressure = pressure + 50_000;
 
     let acc_x = i16::from_be_bytes(u16_bytes(&msg[9..=10]));
     let acc_y = i16::from_be_bytes(u16_bytes(&msg[11..=12]));
@@ -119,11 +119,18 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
+    use super::parse_advertisement_message;
     #[test]
     fn parse_message() {
         let data = [
             0x99, 0x04, 0x05, 0x12, 0xFC, 0x53, 0x94, 0xC3, 0x7C, 0x00, 0x04, 0xFF, 0xfc, 0x04,
             0x0c, 0xac, 0x36, 0x42, 0x00, 0xcd, 0xcB, 0xb8, 0x33, 0x4c, 0x88, 0x4F,
         ];
+
+        let parsed = parse_advertisement_message(&data);
+        assert_eq!(5, parsed.data_format);
+        assert_eq!(24.3, parsed.temperature);
+        assert_eq!(100044, parsed.pressure);
+        assert_eq!(53.49, parsed.humidity);
     }
 }
