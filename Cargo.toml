@@ -1,0 +1,10 @@
+[package]
+name = "ruuvi"
+version = "0.1.0"
+authors = ["Fredrik <fredrik.jonsen@zenon.se>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+btleplug = { git = "https://github.com/deviceplug/btleplug.git", features = ["serde"] }
