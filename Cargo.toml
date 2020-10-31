@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 btleplug = { git = "https://github.com/deviceplug/btleplug.git", features = ["serde"] }
+bluez = "0.2.0"
